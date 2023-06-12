@@ -78,9 +78,13 @@ const Login = () => {
                             </label>
                             <label>Password
                                 <input required type="password" className={` ${warnpassword ? "warning" : ""} `} value={inputtext.password} onChange={inputEvent} name="password" />
-                                
+
                             </label>
-                            <button type="submit">Register</button>
+                            <div className="bottomPortion">
+                                <button type="submit">Login</button>
+                                <a className='Forgot' href="#"> Forgot Your Password</a>
+
+                            </div>
                         </form>
 
                     </div>
