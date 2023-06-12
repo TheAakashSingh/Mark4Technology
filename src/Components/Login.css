@@ -16,6 +16,16 @@
     color: #BC1823;
 }
 
+
+@media (max-width:550px) {
+    .bottomPortion {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
 .bottomPortion {}
 
 .R_midSection>.registrationForms>form>.bottomPortion>button {
