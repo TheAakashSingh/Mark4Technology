@@ -5,7 +5,6 @@ import linkIcon2 from '../Images/Vector (4).png'
 import menu from '../Images/Menu.png'
 import close from '../Images/Close.png'
 import logo from '../Images/Logo.png'
-import { Navigate } from 'react-router-dom'
 const Registration = () => {
     const { useState } = React;
     const [inputtext, setinputtext] = useState({
