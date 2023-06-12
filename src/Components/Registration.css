@@ -1,0 +1,207 @@
+.registration {
+    display: grid;
+    grid-template-columns: auto 5%;
+    grid-template-rows: 74rem;
+}
+
+.StartSection {
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width:700px) {
+    .R_leftSection {
+        position: absolute;
+        z-index: 1;
+        height: 1024px;
+        left: 0;
+        top: 0;
+        bottom: 0;
+    }
+    .R_midSection>.registrationForms>form>.dob_Mobile{
+        grid-template-columns: unset !important;
+    }
+
+}
+
+.R_leftSection {
+    background-color: #F4E7EA;
+    width: auto;
+}
+
+
+.regLoginLeft {
+    padding: 50px 0px;
+    padding-right: 10px;
+}
+
+.regLoginLeft>#close {
+    cursor: pointer;
+    float: right;
+}
+
+.regLeftBlock {
+    display: none;
+}
+
+.R_midSection {
+    margin: 50px 60px;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.R_midSection>.headerRegistration {
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+}
+
+.R_midSection>.headerRegistration>.heads_R>h3 {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 47px;
+    /* identical to box height */
+
+
+    color: #000000;
+    /* justify-content: center; */
+}
+
+.R_midSection>.headerRegistration>.linkicon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.R_midSection>.headerRegistration>.linkicon>:nth-child(2) {
+    position: relative;
+    top: -9px;
+    left: -9px;
+}
+
+.R_midSection>.registrationForms>form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.R_midSection>.registrationForms>form>label {
+    display: flex;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.R_midSection>.registrationForms>form>.dob_Mobile {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 15px;
+}
+
+.R_midSection>.registrationForms>form>.dob_Mobile>label {
+    display: flex;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.R_midSection>.registrationForms>form>label>input,
+select {
+    background: #F4E7EA;
+    box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    height: 36px;
+    font-size: 17px;
+    border: none;
+    padding: 5px 17px;
+}
+
+.R_midSection>.registrationForms>form>.dob_Mobile>label>input,
+select {
+    background: #F4E7EA;
+    box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    height: 36px;
+    font-size: 17px;
+    border: none;
+    padding: 5px 17px;
+}
+
+.R_midSection>.registrationForms>form>button {
+    width: 136px;
+    height: 43px;
+    background-color: #BC1823;
+    border-radius: 8px;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    color: #FFFFFF;
+    border: none;
+    margin-top: 20px;
+}
+
+
+.warning {
+    border: 1px solid red !important
+}
+
+.type_password {
+    border: 1px solid red !important
+}
+
+.fa-envelope {
+    position: absolute;
+    left: 10px;
+    cursor: pointer;
+    top: 15px
+}
+
+.fa-lock {
+    position: absolute;
+    left: 12px;
+    top: 15px;
+    cursor: pointer;
+    font-size: 15px
+}
+
+.fa-eye-slash {
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    font-size: 15px;
+    cursor: pointer
+}
+
+.fa-eye {
+    position: absolute;
+    right: 10px;
+    top: 15px;
+    font-size: 15px;
+    cursor: pointer
+}
+
+.R_rightSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+}
+
+.R_rightSection>button {
+    cursor: pointer;
+    border: none;
+}
+
+.R_rightSection>img {}
