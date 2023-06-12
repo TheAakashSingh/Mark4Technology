@@ -2,10 +2,12 @@ import React from 'react'
 import './Registration.css'
 import linkIcon1 from '../Images/Vector (3).png'
 import linkIcon2 from '../Images/Vector (4).png'
+import { useNavigate } from 'react-router-dom';
 import menu from '../Images/Menu.png'
 import close from '../Images/Close.png'
 import logo from '../Images/Logo.png'
 const Registration = () => {
+    const navigate = useNavigate();
     const { useState } = React;
     const [inputtext, setinputtext] = useState({
         email: "",
@@ -46,7 +48,7 @@ const Registration = () => {
         }
         else {
             alert("form submitted");
-            window.location.href = './Login'
+            navigate('/Login'); 
             
         }
 
