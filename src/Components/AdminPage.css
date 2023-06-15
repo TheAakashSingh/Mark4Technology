@@ -1,0 +1,309 @@
+.AdminPage {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 74rem;
+}
+
+.adminLeftSide {
+    display: flex;
+
+}
+
+.adminLeftSide>.R_leftSection>.regLoginLeft>.adminbtns {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 150px;
+
+}
+
+.adminbtns>:nth-child(1) {
+    width: 226px;
+    height: 38px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 18px;
+    border: none;
+    color: #F9F9F9;
+    background: #D3616B;
+    box-shadow: 0px 2px 4px rgba(155, 69, 77, 0.76);
+    border-radius: 8px;
+}
+
+.adminbtns>:nth-child(2) {
+    width: 226px;
+    height: 38px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 18px;
+    border: 2px solid #D3616B;
+    filter: drop-shadow(0px 2px 4px rgba(155, 69, 77, 0.76));
+    border-radius: 8px;
+    color: #D3616B;
+}
+
+.adminMidSection {
+    width: -webkit-fill-available;
+    margin-top: 55px;
+    margin-left: 22px;
+    margin-right: 22px;
+}
+
+.adminTopsection {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.adminTopsection_a {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    float: right;
+}
+
+.adminTopsection_a>:nth-child(3) {
+    margin-left: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.adminTopsection_a>.admin_Profile_Name {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    float: right;
+}
+
+.adminTopsection_a>.admin_Profile_Name>#fname {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.adminTopsection_a>.admin_Profile_Name>#lname {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    color: #5C5C5C;
+
+}
+
+.adminTopsection_b {
+    margin-top: 38px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.adminTopsection_b>a {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #D3616B;
+    text-decoration: none;
+}
+
+.adminTopsection_b>button {
+    float: right;
+    width: 154px;
+    height: 38px;
+    border: 2px solid #D3616B;
+    border-radius: 8px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 18px;
+    color: #D3616B;
+}
+
+.adminTopsection_c {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.adminTopsection_c>input {
+    width: 225px;
+    height: 31px;
+    background: rgba(248, 248, 248, 0.91);
+    box-shadow: 0px 0.1px 0.3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    border: none;
+}
+
+.adminTopsection_c>select {
+    width: 160px;
+    height: 31px;
+    border: none;
+    background: rgba(248, 248, 248, 0.91);
+    box-shadow: 0px 0.1px 0.3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 24px;
+    color: #979797;
+    float: right;
+}
+
+.adminTopsection_c>:nth-child(3) {
+    width: 225px;
+    height: 31px;
+    background: rgba(248, 248, 248, 0.91);
+    box-shadow: 0px 0.1px 0.3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    border: none;
+    float: right;
+}
+
+.adminTopsection_d {
+    margin-top: 20px;
+}
+
+.adminTopsection_d>button {
+    box-sizing: border-box;
+    width: 69px;
+    height: 30px;
+    left: 1326px;
+    top: 234px;
+    border: none;
+    background: #D3616B;
+    box-shadow: 0px 2px 4px rgba(155, 69, 77, 0.76);
+    border-radius: 8px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 18px;
+    color: #F9F9F9;
+}
+
+.adminTopsection_e {
+    width: 100%;
+    display: flex;
+    float: right;
+    gap: 15px;
+    align-items: center;
+}
+
+.adminTopsection_e>p {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    margin-right: 10px;
+    line-height: 23px;
+    color: #434343;
+
+}
+
+.adminTopsection_e>button {
+    box-sizing: border-box;
+    width: 63px;
+    height: 23px;
+    left: 618px;
+    top: 291px;
+    border: none;
+    border: 1px solid #D3616B;
+    border-radius: 8px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 15px;
+    color: #D3616B;
+
+}
+
+
+.adminTopsection_f {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.adminTopsection_f>span {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    color: #D3616B;
+}
+
+.adminBottomSection {
+    overflow: scroll;
+    margin-top: 20px;
+    height: 49rem;
+}
+
+.adminBottomSection>.adminBox {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.adminBottomSection>.adminBox>span {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    margin-top: 12px;
+    text-decoration-line: underline;
+
+    color: #D3616B;
+
+
+}
+
+.adminBottomSection>.adminBox>.line {
+    width: 2px;
+    background: #D3616B;
+}
+
+.adminBottomSection>.adminBox>.dataOfAdmin {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dataOfAdmin>.detailsLogin>p {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    color: #777777;
+}
+
+.dataOfAdmin>p {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    color: #777777;
+}
+
+.dataOfAdmin>.detailsLogout>p {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+    color: #777777;
+}
