@@ -180,7 +180,7 @@
 }
 
 @media (max-width: 768px) {
-    .userBottomsection table {
+    /* .userBottomsection table {
         table-layout: auto;
     }
 
@@ -201,5 +201,5 @@
         font-weight: bold;
         display: inline-block;
         width: 100px;
-    }
+    } */
 }
