@@ -1,7 +1,7 @@
 .Login {
     display: grid;
     grid-template-columns: auto 10%;
-    grid-template-rows: 40rem;
+    grid-template-rows: 46.5rem;
 }
 
 .Forgot {

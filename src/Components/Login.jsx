@@ -1,4 +1,5 @@
 import React from 'react'
+import jwt_decode from 'jwt-decode';
 import './Login.css'
 import './Registration.css'
 import linkIcon1 from '../Images/Vector (3).png'
@@ -6,45 +7,34 @@ import linkIcon2 from '../Images/Vector (4).png'
 import menu from '../Images/Menu.png'
 import close from '../Images/Close.png'
 import logo from '../Images/Logo.png'
-const Login = () => {
+const Login = ({ onLogin }) => {
+    
     const { useState } = React;
-    const [inputtext, setinputtext] = useState({
-        password: ""
-    });
+    const [employeeId, setEmployeeId] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [click, setClick] = useState(false)
     const closeLeftSide = () => {
         setClick(true)
     }
-
-    const [warnpassword, setwarnpassword] = useState(false);
-
-
-    const inputEvent = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setinputtext((lastValue) => {
-            return {
-                ...lastValue,
-                [name]: value
-            }
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        const response = await fetch('http://localhost:5000/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password }),
         });
 
-    }
-
-
-
-    const submitForm = (e) => {
-        e.preventDefault();
-        setwarnpassword(false);
-
-        if (inputtext.password === "") {
-            setwarnpassword(true);
+        if (response.ok) {
+            const { accessToken } = await response.json();
+            const decodedToken = jwt_decode(accessToken);
+            const role = decodedToken.role;
+            onLogin(accessToken, role);
+        } else {
+            
         }
-        else {
-            alert("Login SuccessFull");
-        }
+    };
 
-    }
 
 
     return (
@@ -67,17 +57,22 @@ const Login = () => {
                         </div>
                     </div>
                     <div className="registrationForms">
-                        <form onSubmit={submitForm} action="/postss" method="post">
+                        <form onSubmit={handleLogin} >
                             <label >
                                 Employee Id
-                                <input type="text" name="employeeId" required />
+                                <input type="text" name="employeeId" value={employeeId}
+                                 onChange={(e) => {setEmployeeId(e.target.value)}} required />
                             </label>
 
                             <label >Username
-                                <input type="text" name="userName" id="" required />
+                                <input type="text" name="userName" value={username}
+                                    onChange={(e) => setUsername(e.target.value)}  required />
                             </label>
                             <label>Password
-                                <input required type="password" className={` ${warnpassword ? "warning" : ""} `} value={inputtext.password} onChange={inputEvent} name="password" />
+                                <input required type="password"
+                                    placeholder="Password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)} name="password" />
 
                             </label>
                             <div className="bottomPortion">
