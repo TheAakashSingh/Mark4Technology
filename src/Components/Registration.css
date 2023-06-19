@@ -101,12 +101,26 @@
     gap: 5px;
 }
 
+.R_midSection>.registrationForms>form>.employeeIdRole {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 15px;
+}
 .R_midSection>.registrationForms>form>.dob_Mobile {
     display: grid;
     grid-template-columns: auto auto;
     gap: 15px;
 }
 
+.R_midSection>.registrationForms>form>.employeeIdRole>label {
+    display: flex;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    flex-direction: column;
+    gap: 5px;
+}
 .R_midSection>.registrationForms>form>.dob_Mobile>label {
     display: flex;
     font-style: normal;
@@ -130,6 +144,15 @@ select {
 
 .R_midSection>.registrationForms>form>.dob_Mobile>label>input,
 select {
+    background: #F4E7EA;
+    box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    height: 36px;
+    font-size: 17px;
+    border: none;
+    padding: 5px 17px;
+}
+.R_midSection>.registrationForms>form>.employeeIdRole>label>input, select {
     background: #F4E7EA;
     box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.05);
     border-radius: 8px;

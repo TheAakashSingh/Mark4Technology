@@ -11,7 +11,16 @@ const Registration = () => {
     const { useState } = React;
     const [inputtext, setinputtext] = useState({
         email: "",
-        password: ""
+        password: "",
+        role:'',
+        fname:'',
+        lname:'',
+        eid:'',
+        dob:'',
+        number:'',
+        gender:'',
+        username:'',
+        password:''
     });
     const [click, setClick] = useState(false)
     const closeLeftSide = () => {
@@ -33,28 +42,37 @@ const Registration = () => {
         });
 
     }
-
-
-
-    const submitForm = (e) => {
+    const submitForm = async (e) => {
         e.preventDefault();
         setwarnemail(false);
         setwarnpassword(false);
         if (inputtext.email === "") {
             setwarnemail(true);
-        }
-        else if (inputtext.password === "") {
+        } else if (inputtext.password === "") {
             setwarnpassword(true);
+        } else {
+            try {
+                const response = await fetch("http://localhost:5000/api/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(inputtext),
+                });
+                if (response.ok) {
+                    alert("Registration successful");
+                    navigate('/');
+                } else {
+                    alert("Registration failed");
+                }
+            } catch (error) {
+                console.log(error);
+                alert("An error occurred during registration");
+            }
         }
-        else {
-            alert("form submitted");
-            navigate('/Login'); 
-            
-        }
+    };
 
-        
 
-    }
 
     return (
         <div className='registration'>
@@ -79,24 +97,33 @@ const Registration = () => {
                     </div>
                     <div className="registrationForms">
                         <form onSubmit={submitForm} action="/Login" method="post">
-                            <label >
-                                Employee Id
-                                <input type="text" name="employeeId"  required />
-                            </label>
+                            <div className="employeeIdRole">
+                                <label >
+                                    Employee Id
+                                    <input type="text" name="eid" value={inputtext.id} onChange={inputEvent} required />
+                                </label>
+                                <label > Employee Role
+                                    <select name="role" id="" style={{ height: '47px' }} value={inputtext.role} onChange={inputEvent}>
+                                        <option value="admin">admin</option>
+                                        <option value="user">user</option>
+                                        <option value="moderator">moderator</option>
+                                    </select>
+                                </label>
+                            </div>
                             <label >
                                 First Name
-                                <input type="text" name="firstName"  required />
+                                <input type="text" name="fname" value={inputtext.fname} onChange={inputEvent} required />
                             </label>
                             <label >
                                 last Name
-                                <input type="text" name="lastName"  required />
+                                <input type="text" name="lname" value={inputtext.lnamename} onChange={inputEvent} required />
                             </label>
                             <div className="dob_Mobile">
                                 <label > Date OF Birth
-                                    <input type="date" name="dob"  required />
+                                    <input type="date" name="dob"value={inputtext.dob} onChange={inputEvent} required />
                                 </label>
                                 <label > Mobile Number
-                                    <input type="number" name="mobileNumber"  required />
+                                    <input type="number" name="number"value={inputtext.number} onChange={inputEvent} required />
                                 </label>
                             </div>
                             <label >Email Id
@@ -104,7 +131,7 @@ const Registration = () => {
                                 <i className="fa fa-envelope"></i>
                             </label>
                             <label>Gender
-                                <select name="Gender" id="" required>
+                                <select name="Gender" id="" value={inputtext.id} onChange={inputEvent} required>
                                     <option value="Men">Men</option>
                                     <option value="Women">Women</option>
                                     <option value="Transgender">Transgender</option>
@@ -112,11 +139,11 @@ const Registration = () => {
                                 </select>
                             </label>
                             <label >Username
-                                <input type="text" name="userName" id="" required />
+                                <input type="text" name="username" value={inputtext.username} onChange={inputEvent}  required  id=""  />
                             </label>
                             <label>Password
-                                <input required type="password" className={` ${warnpassword ? "warning" : ""}`}  value={inputtext.password} onChange={inputEvent} name="password" />
-                             </label>
+                                <input required type="password" className={` ${warnpassword ? "warning" : ""}`} value={inputtext.password} onChange={inputEvent} name="password" />
+                            </label>
                             <button type="submit">Register</button>
                         </form>
 
@@ -125,14 +152,9 @@ const Registration = () => {
             </div>
 
             <div className="R_rightSection">
-                <button onClick={(()=>{
-                    if(click === false){
-                        setClick(true)
-                    }
-                    else {
-                        setClick(false)
-                    }
-                })}><img  src={menu} alt="" /></button>
+                <button onClick={(() => {
+                    navigate('/')
+                })}><img src={menu} alt="" /></button>
 
             </div>
         </div>

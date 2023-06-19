@@ -1,23 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import menu from '../Images/Menu.png'
-import close from '../Images/Close.png'
-import logo from '../Images/Logo.png'
-import picMenu from '../Images/Vector (5).png'
-import './AdminPage.css'
-const AdminPage = ({ accessToken }) => {
+import { useNavigate, Link } from 'react-router-dom';
+import menu from '../Images/Menu.png';
+import close from '../Images/Close.png';
+import logo from '../Images/Logo.png';
+import picMenu from '../Images/Vector (5).png';
+import './AdminPage.css';
+
+const AdminPage = ({ accessToken, onLogout }) => {
     const [adminData, setAdminData] = useState(null);
-    const [click, setClick] = useState(false)
+    const [click, setClick] = useState(false);
+    const navigate = useNavigate();
+
     const closeLeftSide = () => {
-        setClick(true)
-    }
+        setClick(true);
+    };
+
     const jsonData = [
-        { id: 1, date:'May 26th 2023', LoginTime: '10:15 AM', AccesssAttempt:'Pass(Login Successsful)', Systemactivity:'uploaded Records...', LogoutTime:'12:20 PM', AccessAtempt2:'Pass(Logouut Successful' },
-        { id: 2,date:'May 25th 2023', LoginTime: '10:15 AM', AccesssAttempt:'Pass(Login Successsful)', Systemactivity:'uploaded Records...', LogoutTime:'12:20 PM', AccessAtempt2:'Pass(Logouut Successful' },
-        { id: 3,date:'May 24th 2023', LoginTime: '10:15 AM', AccesssAttempt:'Pass(Login Successsful)', Systemactivity:'uploaded Records...', LogoutTime:'12:20 PM', AccessAtempt2:'Pass(Logouut Successful' },
-        { id: 4,date:'May 23th 2023', LoginTime: '10:15 AM', AccesssAttempt:'Pass(Login Successsful)', Systemactivity:'uploaded Records...', LogoutTime:'12:20 PM', AccessAtempt2:'Pass(Logouut Successful' },
-        { id: 5,date:'May 22th 2023', LoginTime: '10:15 AM', AccesssAttempt:'Pass(Login Successsful)', Systemactivity:'uploaded Records...', LogoutTime:'12:20 PM', AccessAtempt2:'Pass(Logouut Successful' },
-        // Add more items as needed
-      ];
+        {date:'21-06-2023',LoginTime: '12:24 A.M', AccesssAttempt:'Passed loading...', Systemactivity:"Successfully Data fetching", LogoutTime:'6:45 P.M', AccessAtempt2:"Passed Loading...."},
+        {date:'20-06-2023',LoginTime: '12:24 A.M', AccesssAttempt:'Passed loading...', Systemactivity:"Successfully Data fetching", LogoutTime:'6:45 P.M', AccessAtempt2:"Passed Loading...."},
+        {date:'19-06-2023',LoginTime: '12:24 A.M', AccesssAttempt:'Passed loading...', Systemactivity:"Successfully Data fetching", LogoutTime:'6:45 P.M', AccessAtempt2:"Passed Loading...."},
+        {date:'18-06-2023',LoginTime: '12:24 A.M', AccesssAttempt:'Passed loading...', Systemactivity:"Successfully Data fetching", LogoutTime:'6:45 P.M', AccessAtempt2:"Passed Loading...."},
+        {date:'17-06-2023',LoginTime: '12:24 A.M', AccesssAttempt:'Passed loading...', Systemactivity:"Successfully Data fetching", LogoutTime:'6:45 P.M', AccessAtempt2:"Passed Loading...."},
+        {date:'16-06-2023',LoginTime: '12:24 A.M', AccesssAttempt:'Passed loading...', Systemactivity:"Successfully Data fetching", LogoutTime:'6:45 P.M', AccessAtempt2:"Passed Loading...."},
+        {date:'15-06-2023',LoginTime: '12:24 A.M', AccesssAttempt:'Passed loading...', Systemactivity:"Successfully Data fetching", LogoutTime:'6:45 P.M', AccessAtempt2:"Passed Loading...."},
+        {date:'14-06-2023',LoginTime: '12:24 A.M', AccesssAttempt:'Passed loading...', Systemactivity:"Successfully Data fetching", LogoutTime:'6:45 P.M', AccessAtempt2:"Passed Loading...."},
+
+    ];
 
     useEffect(() => {
         const fetchAdminData = async () => {
@@ -31,7 +39,7 @@ const AdminPage = ({ accessToken }) => {
 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log(data)
+                    console.log(data);
                     setAdminData(data);
                 } else {
                     console.error('Error fetching admin data:', response.statusText);
@@ -43,56 +51,65 @@ const AdminPage = ({ accessToken }) => {
 
         fetchAdminData();
     }, [accessToken]);
+    const handleLogout = () => {
+        localStorage.removeItem('accessToken');
+        const controller = new AbortController();
+        const signal = controller.signal;
+        controller.abort();
+        onLogout();
+        setAdminData(null);
+        navigate('/');
+    };
 
+    const handleTablePageClick = () => {
+        navigate(`/userPage?accessToken=${accessToken}`);
+    };
     return (
         <div className="AdminPage">
             <div className="adminLeftSide">
                 <div className="R_leftSection">
                     <div className={`regLoginLeft ${click ? 'regLeftBlock' : ''}`}>
-                        <img id='close' onClick={closeLeftSide} src={close} alt="" />
+                        <img id="close" onClick={closeLeftSide} src={close} alt="" />
                         <img src={logo} alt="" className="logo" />
-                        <div className="adminbtns">
-                            <button>ADMIN</button>
-                            <button>MODERATOR</button>
-                        </div>
                     </div>
                 </div>
                 <div className="adminMidSection">
                     <div className="adminTopsection">
                         <div className="adminTopsection_a">
-
-                            <img src={picMenu} alt="" srcset="" />
                             <div className="admin_Profile_Name">
-                                <span id='fname'>John Doe</span>
-                                <span id='lname'>Admin</span>
+                                <img src={picMenu} alt="" srcSet="" />
+                                <div className="profName">
+                                    <span id="fname">{adminData && adminData.loggedInUserData.fname + adminData.loggedInUserData.lname}</span>
+                                    <span id="lname">{adminData && adminData.loggedInUserData.role}</span>
+                                </div>
                             </div>
-                            <button onClick={(() => {
-                                if (click === false) {
-                                    setClick(true)
-                                }
-                                else {
-                                    setClick(false)
-                                }
-                            })}><img src={menu} alt="" /></button>
+                            <div className="allLinks">
+                                <ul>
+                                    {adminData && adminData.loggedInUserData.role==='admin'?<li> <Link to="/registration">Registration</Link> </li>:''}
+                                    {adminData && adminData.loggedInUserData.role==='admin'?<li  onClick={handleTablePageClick}>Filter Data</li>:''}
+                                    <li>Log</li>
+                                    <button onClick={handleLogout}>Logout</button>
+                                </ul>
+                            </div>
                         </div>
                         <div className="adminTopsection_b">
-                            <a href="">Select Moderator</a>
-                            <button>Add Moderator</button>
+                            <a href="">Select User</a>
+                            {adminData && adminData.loggedInUserData.role==='admin' ? <button>Add</button>:"" }
                         </div>
                         <div className="adminTopsection_c">
                             <input type="search" name="search" id="srch" placeholder='Search' />
-                            <select name="Role" id="roles" placeholder='Role'>
+                            {adminData && adminData.loggedInUserData.role==='admin'?<select name="Role" id="roles" placeholder='Role'>
                                 <option value="">Role</option>
                                 <option value="x">x</option>
                                 <option value="y">y</option>
                                 <option value="z">z</option>
                                 <option value="a">a</option>
-                            </select>
-                            <input type="search" name="searchUser" id="srchUser" placeholder='Search User' />
+                            </select>:''}
+                            {adminData && adminData.loggedInUserData.role==='admin'?<input type="search" name="searchUser" id="srchUser" placeholder='Search User' />:''}
                         </div>
-                        <div className="adminTopsection_d">
-                            <button>Add</button>
-                        </div>
+                        {adminData && adminData.loggedInUserData.role==='admin'?<div className="adminTopsection_d">
+                            <button>Submit</button>
+                        </div>:''}
                         <div className="adminTopsection_e">
                             <p>Moderator Name...</p>
                             <button>Delete</button>

@@ -45,6 +45,10 @@
     border: none;
 }
 
+button {
+    cursor: pointer;
+}
+
 .regLoginLeft>.userFilterSection>form>button {
     box-sizing: border-box;
     width: 64px;
@@ -70,38 +74,62 @@
 .userTopsection {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
 }
 
 .userTopsection_a {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
     gap: 10px;
-    float: right;
 }
 
-.userTopsection_a>:nth-child(3) {
-    margin-left: 10px;
-    border: none;
+
+.userTopsection_a>.allLinks>ul {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+.userTopsection_a>.allLinks>ul>li {
+    list-style: none;
+    font-family: 'Roboto';
     cursor: pointer;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 24px;
+    text-decoration-line: underline;
+    color: #BB1823;
+}
+.userTopsection_a>.allLinks>ul>li>a {
+    text-decoration-line: underline;
+    color: #BB1823;
 }
 
 .userTopsection_a>.user_Profile_Name {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    float: right;
+    height: min-content;
+}
+.userTopsection_a>.user_Profile_Name>.profName {
     display: flex;
     flex-direction: column;
     justify-content: center;
     float: right;
 }
 
-.userTopsection_a>.user_Profile_Name>#fname {
+.userTopsection_a>.user_Profile_Name>.profName>#fname {
     font-family: 'Roboto';
     font-style: normal;
+    width: max-content;
     font-weight: 600;
     font-size: 16px;
     line-height: 19px;
 }
 
-.userTopsection_a>.user_Profile_Name>#lname {
+.userTopsection_a>.user_Profile_Name>.profName>#lname {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
@@ -109,12 +137,26 @@
     line-height: 14px;
     color: #5C5C5C;
 }
+.userTopsection_a>.allLinks>ul>button {
+    width: 125px;
+    height: 38px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 18px;
+    border: 2px solid #D3616B;
+    filter: drop-shadow(0px 2px 4px rgba(155, 69, 77, 0.76));
+    border-radius: 8px;
+    color: #D3616B;
+}
 
 .userTopsection_c {
     display: flex;
     margin-top: 46px;
     gap: 22px;
     align-items: center;
+    justify-content: flex-end;
 }
 
 .userTopsection_c>input {
@@ -160,11 +202,25 @@
     border: 1px solid #ddd;
 }
 
+.userBottomsection td {
+    word-wrap: break-word;
+    max-width: 200px;
+}
+
+.userBottomsection td>button {
+    width: 104px;
+    height: 40px;
+    background: #F4D8DA;
+    border-width: 1px 1px 1px 1px;
+    border-style: solid;
+    border-color: #CE9699;
+}
+
 .userBottomsection th {
     padding: 0px 20px;
     height: 36px;
     background: rgba(188, 24, 35, 0.17);
-    border-width: 1px 0px 0px 1px;
+    border-width: 1px 1px 0px 1px;
     border-style: solid;
     border-color: #CE9699;
     font-family: 'Roboto';

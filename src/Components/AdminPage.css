@@ -33,15 +33,15 @@
     border-radius: 8px;
 }
 
-.adminbtns>:nth-child(2) {
-    width: 226px;
+.adminTopsection_a>.allLinks>ul>button{
+    width: 125px;
     height: 38px;
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 700;
     font-size: 15px;
     line-height: 18px;
-    border: 2px solid #D3616B;
+    border: 2px solid #D3616B ;
     filter: drop-shadow(0px 2px 4px rgba(155, 69, 77, 0.76));
     border-radius: 8px;
     color: #D3616B;
@@ -57,38 +57,65 @@
 .adminTopsection {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
 }
 
 .adminTopsection_a {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.adminTopsection_a>.allLinks>ul {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.adminTopsection_a>.allLinks>ul>li {
+    list-style: none;
+    font-family: 'Roboto';
+    cursor: pointer;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 24px;
+    text-decoration-line: underline;
+    color: #BB1823;
+}
+
+.adminTopsection_a>.allLinks>ul>li>a {
+    text-decoration-line: underline;
+    color: #BB1823;
+}
+
+
+.adminTopsection_a>.admin_Profile_Name {
+    display: flex;
     justify-content: center;
     gap: 10px;
     float: right;
+    height: min-content;
 }
 
-.adminTopsection_a>:nth-child(3) {
-    margin-left: 10px;
-    border: none;
-    cursor: pointer;
-}
-
-.adminTopsection_a>.admin_Profile_Name {
+.adminTopsection_a>.admin_Profile_Name>.profName {
     display: flex;
     flex-direction: column;
     justify-content: center;
     float: right;
 }
 
-.adminTopsection_a>.admin_Profile_Name>#fname {
+.adminTopsection_a>.admin_Profile_Name>.profName>#fname {
     font-family: 'Roboto';
     font-style: normal;
+    width: max-content;
     font-weight: 600;
     font-size: 16px;
     line-height: 19px;
 }
 
-.adminTopsection_a>.admin_Profile_Name>#lname {
+.adminTopsection_a>.admin_Profile_Name>.profName>#lname {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 400;
@@ -118,7 +145,7 @@
 
 .adminTopsection_b>button {
     float: right;
-    width: 154px;
+    width: 88px;
     height: 38px;
     border: 2px solid #D3616B;
     border-radius: 8px;
@@ -138,6 +165,7 @@
 .adminTopsection_c>input {
     width: 225px;
     height: 31px;
+    padding: 10px 15px;
     background: rgba(248, 248, 248, 0.91);
     box-shadow: 0px 0.1px 0.3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
@@ -175,6 +203,7 @@
 }
 
 .adminTopsection_d>button {
+    float: right;
     box-sizing: border-box;
     width: 69px;
     height: 30px;
