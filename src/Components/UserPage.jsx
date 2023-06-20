@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import menu from '../Images/Menu.png'
 import close from '../Images/Close.png'
 import logo from '../Images/Logo.png'
 import picMenu from '../Images/Vector (5).png'
@@ -77,7 +76,7 @@ const UserPage = ({ accessToken, onLogout }) => {
 
     const handleLogout = () => {
         const controller = new AbortController();
-        const signal = controller.signal;
+
         controller.abort();
         onLogout();
         setUserData(null);
