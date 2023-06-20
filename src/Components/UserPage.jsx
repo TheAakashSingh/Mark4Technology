@@ -18,11 +18,18 @@ const UserPage = ({ accessToken, onLogout }) => {
     const [adminData, setAdminData] = useState(null);
     const [editingUserId, setEditingUserId] = useState(null);
     const [filteredUserData, setFilteredUserData] = useState(null);
+    const [uploadedFile, setUploadedFile] = useState(null);
+
 
     const [click, setClick] = useState(false);
     const closeLeftSide = () => {
         setClick(true);
     };
+    const handleFileUpload = (event) => {
+        const file = event.target.files[0];
+        setUploadedFile(file);
+    };
+
     const handleReset = () => {
         setName('');
         setEmail('');
@@ -39,6 +46,33 @@ const UserPage = ({ accessToken, onLogout }) => {
         });
 
         setFilteredUserData(filteredData.length > 0 ? filteredData : null);
+    };
+    const handleImport = async () => {
+        if (uploadedFile) {
+            const formData = new FormData();
+            formData.append('file', uploadedFile);
+
+            try {
+                const response = await fetch('http://localhost:5000/api/import', {
+                    method: 'POST',
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Data imported successfully:', data);
+                } else {
+                    console.error('Error importing data:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error importing data:', error);
+            }
+        } else {
+            console.log('No file selected');
+        }
     };
 
     const handleLogout = () => {
@@ -139,7 +173,7 @@ const UserPage = ({ accessToken, onLogout }) => {
         };
 
         fetchUserData();
-    }, [accessToken]);
+    }, [accessToken, uploadedFile]);
     useEffect(() => {
         if (userData && userData.isAdmin) {
             const fetchAdminData = async () => {
@@ -217,14 +251,18 @@ const UserPage = ({ accessToken, onLogout }) => {
                             </div>
                         </div>
                         <div className="userTopsection_c">
+                            <button onClick={handleImport}>Import</button>
+                            <input type="file" name="file" accept=".xlsx, .xls" onChange={handleFileUpload} />
+
                             <input type="search" name="search" id="srch" placeholder='Search' onChange={(e) => handleSearch(e.target.value)} />
                             <label > Results</label>
                             <select name="Role" id="roles" placeholder='Role'>
-                                <option value="">Role</option>
-                                <option value="x">x</option>
-                                <option value="y">y</option>
-                                <option value="z">z</option>
-                                <option value="a">a</option>
+                                <option value="">1</option>
+                                <option value="x">10</option>
+                                <option value="y">20</option>
+                                <option value="z">30</option>
+                                <option value="a">40</option>
+                                <option value="a">50</option>
                             </select>
                         </div>
                     </div>

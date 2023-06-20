@@ -5,6 +5,9 @@ const cors = require('cors');
 const app = express();
 app.use(express.json());
 app.use(cors());
+const multer = require('multer');
+const xlsx = require('node-xlsx');
+
 
 const secretKey = 'your-secret-key'; // Replace with your own secret key
 
@@ -19,6 +22,51 @@ const users = [
   { id: 7, employeeId: '2139', fname: 'Shreya ', lname: 'Singh', email: 'Shreya@gmail.com', username: 'Shreya210', password: '123@Shreya', role: 'moderator', number: '7878787878', address: '789 Road', pincode: '67890', city: 'muzaffarpur', dob: '1995-12-31' },
 ];
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+const upload = multer({ storage });
+app.post('/api/import', authenticateToken, upload.single('file'), (req, res) => {
+  try {
+    const filePath = req.file.path;
+    const workbook = xlsx.parse(filePath);
+    const importedData = workbook[0].data;
+    const newUsers = [];
+    for (let i = 1; i < importedData.length; i++) {
+      const [employeeId, fname, lname, email, username, password, role, number, address, pincode, city, dob] = importedData[i];
+      const existingUser = users.find((user) => user.email === email);
+      if (!existingUser) {
+        const newUser = {
+          id: users.length + 1,
+          employeeId: employeeId || '',
+          fname: fname || '',
+          lname: lname || '',
+          email: email || '',
+          username: username || '',
+          password: password || '',
+          role: role || '',
+          number: number || '',
+          address: address || '',
+          pincode: pincode || '',
+          city: city || '',
+          dob: dob || ''
+        };
+        newUsers.push(newUser);
+        users.push(newUser);
+      }
+    }
+
+    res.json({ message: 'Data imported successfully', importedData, newUsers });
+  } catch (error) {
+    console.error('Error importing data:', error);
+    res.status(500).json({ message: 'Failed to import data' });
+  }
+});
 
 app.post('/api/register', (req, res) => {
   const { eid, fname, lname, dob, number, email, gender, username, password, role } = req.body;
