@@ -3,7 +3,9 @@
     grid-template-columns: auto 10%;
     grid-template-rows: 46.5rem;
 }
-
+.errInputColorChange{
+    border:1px solid red !important;
+}
 .Forgot {
     padding-top: 20px;
     float: right;

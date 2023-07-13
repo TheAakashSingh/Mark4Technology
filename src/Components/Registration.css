@@ -1,7 +1,7 @@
 .registration {
     display: grid;
     grid-template-columns: auto 5%;
-    grid-template-rows: 74rem;
+    grid-template-rows: max-content;
 }
 
 .StartSection {
@@ -18,7 +18,8 @@
         top: 0;
         bottom: 0;
     }
-    .R_midSection>.registrationForms>form>.dob_Mobile{
+
+    .R_midSection>.registrationForms>form>.dob_Mobile {
         grid-template-columns: unset !important;
     }
 
@@ -27,9 +28,35 @@
 .R_leftSection {
     background-color: #F4E7EA;
     width: auto;
-    height: 74rem;
+    height: initial;
 }
 
+.linksToPage>ul>li {
+    list-style: none;
+    font-family: 'Roboto';
+    cursor: pointer;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 24px;
+    color: #BB1823;
+    width: 160x;
+    padding: 6px 10px;
+    border-radius: 7px;
+    text-decoration: none;
+}
+
+.linksToPage>ul>li>a {
+    color: #BB1823;
+    text-decoration: none;
+}
+
+.linksToPage>ul {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+}
 
 .regLoginLeft {
     padding: 50px 0px;
@@ -106,6 +133,7 @@
     grid-template-columns: auto auto;
     gap: 15px;
 }
+
 .R_midSection>.registrationForms>form>.dob_Mobile {
     display: grid;
     grid-template-columns: auto auto;
@@ -121,6 +149,7 @@
     flex-direction: column;
     gap: 5px;
 }
+
 .R_midSection>.registrationForms>form>.dob_Mobile>label {
     display: flex;
     font-style: normal;
@@ -152,7 +181,9 @@ select {
     border: none;
     padding: 5px 17px;
 }
-.R_midSection>.registrationForms>form>.employeeIdRole>label>input, select {
+
+.R_midSection>.registrationForms>form>.employeeIdRole>label>input,
+select {
     background: #F4E7EA;
     box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.05);
     border-radius: 8px;
@@ -229,3 +260,11 @@ select {
 }
 
 .R_rightSection>img {}
+
+.error {
+    border: 2px solid red;
+}
+.error-message {
+    color: red;
+    margin-top: 5px;
+}

@@ -1,0 +1,52 @@
+.ManageGroup {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: max-content;
+
+}
+
+.groupsAddBox {
+    display: flex;
+    /* position: fixed; */
+    z-index: 1;
+    top: 10rem;
+    left: 52%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 20px 20px;
+    border-radius: 12px;
+    background-color: rgb(244 216 218);
+  
+}
+.M2-buttom{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.groupsAddBox input {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.M2-buttom table {
+    width: 51% !important;
+   
+}
+.groupsAddBox button {
+    padding: 10px 20px;
+    background-color: #d3616b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.groupsAddBox button:hover {
+    background-color: #ea7b84;
+    transition: all 200ms;
+}

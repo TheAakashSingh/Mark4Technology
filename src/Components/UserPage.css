@@ -1,7 +1,7 @@
 .UserPage {
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: 74rem;
+    grid-template-rows: max-content;
 }
 
 .userLeftSide {
@@ -51,8 +51,8 @@ button {
 
 .regLoginLeft>.userFilterSection>form>button {
     box-sizing: border-box;
-    width: 64px;
-    height: 28px;
+    width: 16rem;
+    height: 32px;
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 500;
@@ -70,7 +70,6 @@ button {
     margin-left: 22px;
     margin-right: 22px;
 }
-
 .userTopsection {
     display: flex;
     flex-direction: column;
@@ -90,6 +89,7 @@ button {
     align-items: center;
     justify-content: center;
 }
+
 .userTopsection_a>.allLinks>ul>li {
     list-style: none;
     font-family: 'Roboto';
@@ -101,6 +101,7 @@ button {
     text-decoration-line: underline;
     color: #BB1823;
 }
+
 .userTopsection_a>.allLinks>ul>li>a {
     text-decoration-line: underline;
     color: #BB1823;
@@ -113,6 +114,7 @@ button {
     float: right;
     height: min-content;
 }
+
 .userTopsection_a>.user_Profile_Name>.profName {
     display: flex;
     flex-direction: column;
@@ -137,6 +139,7 @@ button {
     line-height: 14px;
     color: #5C5C5C;
 }
+
 .userTopsection_a>.allLinks>ul>button {
     width: 125px;
     height: 38px;
@@ -159,13 +162,116 @@ button {
     justify-content: flex-end;
 }
 
-.userTopsection_c>input {
-    width: 269px;
-    height: 35px;
-    padding: 5px 10px;
-    border: 1px solid #BC1823;
-    filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
-    border-radius: 10px;
+.snackbar {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: #f32b00;
+    padding: 10px 20px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.popup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    top: 203px;
+    animation: loading2 500ms;
+    border-radius: 8px;
+    background-color: #f4e7ea;
+    padding: 14px 25px;
+    transform: translate3d(2px, 16px, 33px);
+    filter: drop-shadow(0px 2px 4px rgba(155, 69, 77, 0.76));
+}
+
+.snackbar.visible {
+    opacity: 1;
+}
+
+.snackbar span {
+    flex: 1;
+    animation: loading 1.5s infinite;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+@keyframes loading {
+    0% {
+        width: 0;
+    }
+
+    50% {
+        width: 50%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes loading2 {
+    0% {
+        opacity: 0;
+    }
+
+
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.userTopsection_c>.popup>button {
+    width: auto;
+    height: 38px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 18px;
+    border: 2px solid #D3616B;
+    border-radius: 8px;
+    color: #D3616B;
+}
+.userTopsection_c>button {
+    width: 100px;
+    height: 38px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 18px;
+    border: 2px solid #D3616B;
+    border-radius: 8px;
+    color: #D3616B;
+}
+
+.input-file {
+    display: none;
+}
+
+.custom-file-input {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #f4e0e4;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.file-name-label {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 14px;
+    color: #777;
 }
 
 .userTopsection_c>label {
@@ -176,7 +282,14 @@ button {
     line-height: 18px;
     color: #BC1823;
 }
-
+.userTopsection_c>input {
+    width: 269px;
+    height: 35px;
+    padding: 5px 10px;
+    border: 1px solid #BC1823;
+    filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
+    border-radius: 10px;
+}
 .userTopsection_c>select {
     width: 103px;
     height: 35px;
@@ -205,10 +318,20 @@ button {
 .userBottomsection td {
     word-wrap: break-word;
     max-width: 200px;
+    border-width: 1px 1px 1px 1px;
+    border-style: solid;
+    border-color: #CE9699;
+    font-family: 'Roboto';
+    font-style: normal;
+}
+.userBottomsection td >input{
+    width: -webkit-fill-available;
+    height: 80px;
+    text-wrap: wrap;
 }
 
 .userBottomsection td>button {
-    width: 104px;
+    width: -webkit-fill-available;
     height: 40px;
     background: #F4D8DA;
     border-width: 1px 1px 1px 1px;
@@ -233,6 +356,22 @@ button {
 
 .userBottomsection tbody tr:nth-child(even) {
     background-color: #f9f9f9;
+}
+
+#pagination>button {
+    width: 100px;
+    height: 38px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 18px;
+    border: 2px solid #d3616b82;
+    filter:drop-shadow(0px 0px 51px rgba(168, 65, 86, 0.76));
+    border-radius: 5px;
+    color: #D3616B;
+    float: right;
+    margin-top: 16px;
 }
 
 @media (max-width: 768px) {

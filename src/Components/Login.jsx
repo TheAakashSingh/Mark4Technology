@@ -8,32 +8,42 @@ import menu from '../Images/Menu.png'
 import close from '../Images/Close.png'
 import logo from '../Images/Logo.png'
 const Login = ({ onLogin }) => {
-    
+
     const { useState } = React;
     const [employeeId, setEmployeeId] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [click, setClick] = useState(false)
+    const [logerr, setlogerr] = useState('')
+    const [err, seterr] = useState(false)
     const closeLeftSide = () => {
         setClick(true)
     }
     const handleLogin = async (e) => {
         e.preventDefault();
-        const response = await fetch('http://localhost:5000/api/login', {
+        const response = await fetch('http://localhost:8000/mark-42/api/authentication/login', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 'employee_id': employeeId, 'password': password }),
         });
 
         if (response.ok) {
-            const { accessToken } = await response.json();
+
+            const { access: accessToken, refresh: refreshToken } = await response.json();
             const decodedToken = jwt_decode(accessToken);
             const role = decodedToken.role;
-            onLogin(accessToken, role);
+            onLogin(accessToken, refreshToken, role);
         } else {
-            
+            const msg = await response.json()
+            seterr(true)
+            setlogerr(msg.detail)
+            console.log(logerr)
+
         }
     };
+
 
 
 
@@ -60,24 +70,26 @@ const Login = ({ onLogin }) => {
                         <form onSubmit={handleLogin} >
                             <label >
                                 Employee Id
-                                <input type="text" name="employeeId" value={employeeId}
-                                 onChange={(e) => {setEmployeeId(e.target.value)}} required />
+                                <input type="text" name="employeeId" value={employeeId} className={` dss ${err ? 'errInputColorChange' : ''}`}
+                                    onChange={(e) => { setEmployeeId(e.target.value) }} required />
+
                             </label>
 
-                            <label >Username
+                            {/* <label >Username
                                 <input type="text" name="userName" value={username}
-                                    onChange={(e) => setUsername(e.target.value)}  required />
-                            </label>
+                                    onChange={(e) => setUsername(e.target.value)} required />
+                            </label> */}
                             <label>Password
                                 <input required type="password"
                                     placeholder="Password"
                                     value={password}
-                                    onChange={(e) => setPassword(e.target.value)} name="password" />
+                                    className={` dss ${err ? 'errInputColorChange' : ''}`}
+                                    onChange={(e) => (setPassword(e.target.value), seterr(false))} name="password" />
 
+                                {logerr ? (<><label style={{ color: 'red', padding: "10px 20px", opacity: '1', transition: 'opacity 0.3s' }}>{logerr}</label></>) : ''}
                             </label>
                             <div className="bottomPortion">
                                 <button type="submit">Login</button>
-                                <a className='Forgot' href="#"> Forgot Your Password</a>
 
                             </div>
                         </form>
