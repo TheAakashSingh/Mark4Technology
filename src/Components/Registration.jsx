@@ -10,6 +10,7 @@ import './Registration.css';
 
 const Registration = ({ accessToken, onLogout }) => {
     const [adminData, setAdminData] = useState();
+    const [addErr, setaddErr] = useState('')
     const navigate = useNavigate();
 
     const [inputText, setInputText] = useState({
@@ -77,7 +78,7 @@ const Registration = ({ accessToken, onLogout }) => {
         }
 
         try {
-            const response = await fetch('http://localhost:8000/mark-42/api/user/manage-user', {
+            const response = await fetch('http://localhost:8000/mark-42/api/user/manage-user/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -89,13 +90,18 @@ const Registration = ({ accessToken, onLogout }) => {
                 // const err = response.json()
                 // setRegErr(err)
                 alert('Registration successful');
-                navigate('/');
+                navigate('/manage-user');
             } else {
-                alert('Registration failed');
+                alert('User already registered/Duplicate user');
+                setaddErr(response.message)
+                console.log(response)
+
             }
         } catch (error) {
             console.log(error);
-            alert('An error occurred during registration');
+            setaddErr(error.message)
+            console.log(error)
+            // alert('An error occurred during registration');
         }
     };
 
@@ -135,8 +141,8 @@ const Registration = ({ accessToken, onLogout }) => {
                     <div className="registrationForms">
                         <form onSubmit={submitForm} action="/Login" method="post">
                             <div className="employeeIdRole">
-                                <label>
-                                    Employee Id
+                                <label><span>
+                                    Employee Id <span class="text-danger">*</span></span>
                                     <input
                                         type="text"
                                         name="employee_id"
@@ -146,8 +152,10 @@ const Registration = ({ accessToken, onLogout }) => {
                                         className={warnFields.employee_id ? 'warning' : ''}
                                     />
                                 </label>
-                                <label>
-                                    Employee Role
+                                <label><span>
+
+                                    Employee Role <span class="text-danger">*</span>
+                                </span>
                                     <select
                                         name="role"
                                         value={inputText.role}
@@ -162,8 +170,8 @@ const Registration = ({ accessToken, onLogout }) => {
                                     </select>
                                 </label>
                             </div>
-                            <label>
-                                First Name
+                            <label><span>
+                                First Name <span class="text-danger">*</span></span>
                                 <input
                                     type="text"
                                     name="first_name"
@@ -173,8 +181,8 @@ const Registration = ({ accessToken, onLogout }) => {
                                     className={warnFields.first_name ? 'warning' : ''}
                                 />
                             </label>
-                            <label>
-                                Last Name
+                            <label><span>
+                                Last Name <span class="text-danger">*</span></span>
                                 <input
                                     type="text"
                                     name="last_name"
@@ -185,19 +193,22 @@ const Registration = ({ accessToken, onLogout }) => {
                                 />
                             </label>
                             <div className="dob_Mobile">
-                                <label>
-                                    Date OF Birth
+                                <label><span>
+                                    Date OF Birth <span class="text-danger">*</span></span>
                                     <input
                                         type="date"
                                         name="date_of_birth"
                                         value={inputText.date_of_birth}
                                         onChange={inputEvent}
                                         required
+                                        min="2010-01-02"
                                         className={warnFields.date_of_birth ? 'warning' : ''}
                                     />
                                 </label>
-                                <label>
-                                    Mobile Number
+                                <label><span>
+
+                                    Mobile Number <span class="text-danger">*</span>
+                                </span>
                                     <input
                                         type="number"
                                         name="phone_no"
@@ -209,7 +220,8 @@ const Registration = ({ accessToken, onLogout }) => {
                                 </label>
                             </div>
                             <label>
-                                Email Id
+                                <span>
+                                    Email Id <span class="text-danger">*</span></span>
                                 <input
                                     type="email"
                                     name="email"
@@ -221,7 +233,10 @@ const Registration = ({ accessToken, onLogout }) => {
                                 <i className="fa fa-envelope"></i>
                             </label>
                             <label>
-                                Gender
+                                <span>
+                                    Gender <span class="text-danger">*</span>
+
+                                </span>
                                 <select
                                     name="gender"
                                     value={inputText.gender}
@@ -235,7 +250,7 @@ const Registration = ({ accessToken, onLogout }) => {
                                 </select>
                             </label>
                             <label>
-                                Password
+                                <span>Password <span class="text-danger">*</span></span>
                                 <input
                                     required
                                     type="password"
@@ -248,9 +263,10 @@ const Registration = ({ accessToken, onLogout }) => {
                             <button type="submit">Register</button>
                         </form>
                     </div>
+                    {addErr && <>{addErr}</>}
                 </div>
             </div>
-           
+
         </div>
     );
 };

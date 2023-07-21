@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import close from '../Images/Close.png'
 import logo from '../Images/Logo.png'
 import picMenu from '../Images/Vector (5).png'
+import heart from '../Images/heart.png'
 import './UserPage.css'
 const UserPage = ({ refreshToken, onLogout }) => {
     const [first_name, setfirst_name] = useState('')
@@ -15,6 +16,7 @@ const UserPage = ({ refreshToken, onLogout }) => {
     const [address, setAddress] = useState('')
     const [pincode, setPincode] = useState('')
     const [city, setCity] = useState('')
+    const [state, setstate] = useState('')
     const [dob, setDob] = useState('')
     const [tableData, settableData] = useState(null);
     const [selectedFileName, setSelectedFileName] = useState('')
@@ -24,6 +26,7 @@ const UserPage = ({ refreshToken, onLogout }) => {
     const [isVisible, setIsVisible] = useState(false);
     const [isVisiblepopup, setIsVisiblepopup] = useState(false);
     const [LastRowID, setLastRowID] = useState(false);
+    const [dataNumber, setdataNumber] = useState('');
     const [FileErrorMessage, setFileErrorMessage] = useState('')
     const [filterErr, setFilterErr] = useState('')
 
@@ -51,6 +54,7 @@ const UserPage = ({ refreshToken, onLogout }) => {
             alert('Please close the upload box');
         }
     };
+    
     const [click, setClick] = useState(false);
     const closeLeftSide = () => {
         setClick(true);
@@ -110,6 +114,7 @@ const UserPage = ({ refreshToken, onLogout }) => {
         setAddress('');
         setPincode('');
         setCity('');
+        setstate('');
     };
 
     const handleImport = async (e) => {
@@ -126,16 +131,12 @@ const UserPage = ({ refreshToken, onLogout }) => {
                     },
                     body: formData,
                 });
-
                 if (response.ok) {
                     console.log('Data imported successfully:');
                     setIsVisible(true)
                     const timeout = setTimeout(() => {
                         setIsVisible(false);
                     }, 2000);
-
-
-
                 } else {
                     const ErrorMessage = await response.json()
                     setFileErrorMessage(ErrorMessage)
@@ -151,7 +152,12 @@ const UserPage = ({ refreshToken, onLogout }) => {
     };
 
     const handleLogout = () => {
+        localStorage.removeItem('accessToken');
+        const controller = new AbortController();
+        controller.abort();
         onLogout();
+        
+        navigate('/');
       };
 
     const handleFilter = async (e) => {
@@ -168,10 +174,10 @@ const UserPage = ({ refreshToken, onLogout }) => {
             filters.last_name = last_name;
         }
         if (email) {
-            filters.email = email;
+            filters.email_id = email;
         }
         if (number) {
-            filters.number = number;
+            filters.mobile_no = number;
         }
         if (address) {
             filters.address = address;
@@ -182,8 +188,11 @@ const UserPage = ({ refreshToken, onLogout }) => {
         if (city) {
             filters.city = city;
         }
+        if (state) {
+            filters.state = state;
+        }
         if (dob) {
-            filters.dob = dob;
+            filters.date_of_birth = dob;
         }
 
         const filterParams = new URLSearchParams(filters).toString();
@@ -200,6 +209,7 @@ const UserPage = ({ refreshToken, onLogout }) => {
             if (response.ok) {
                 const tableData = await response.json();
                 console.log(tableData.data.length)
+                setdataNumber(tableData.data.length)
                 if (tableData.data.length === 0) {
 
                     setFilterErr("No Data Found")
@@ -235,6 +245,7 @@ const UserPage = ({ refreshToken, onLogout }) => {
                     setLoggedData(decodedToken);
                     console.log(data);
                     settableData(data);
+                    setdataNumber(data.data.length)
                 } else if (response.status === 401) {
                     const refreshResponse = await fetch(
                         'http://localhost:8000/mark-42/api/authentication/refresh-access-token',
@@ -292,6 +303,8 @@ const UserPage = ({ refreshToken, onLogout }) => {
                     data: [...tableData.data, ...newData.data],
                 };
                 settableData(updatedData);
+                
+                setdataNumber(updatedData.data.length)
             } else {
                 console.error('Error fetching user data:', response.statusText);
             }
@@ -326,12 +339,17 @@ const UserPage = ({ refreshToken, onLogout }) => {
                                 <input type="date" name="dob" value={dob} onChange={(e) => setDob(e.target.value)} placeholder="Enter Date Of Birth" />
                                 <label>City</label>
                                 <input type="text" name="city" value={city} onChange={(e) => setCity(e.target.value)} placeholder="Enter City" />
+                                <label>State</label>
+                                <input type="text" name="city" value={state} onChange={(e) => setCity(e.target.value)} placeholder="Enter City" />
                                 <label>Pincode</label>
                                 <input type="number" name="pincode" value={pincode} onChange={(e) => setPincode(e.target.value)} placeholder="Enter Pincode" />
                                 <button type="submit">Apply Filter</button>
                                 <button onClick={handleReset}>Reset</button>
                             </form>
 
+                        </div>
+                        <div className="advertiseLog">
+                            <span>Designed & Developed With <img src={heart} alt="" style={{width:"18px"}}/> By treetor </span>
                         </div>
                     </div>
                 </div>
@@ -383,7 +401,7 @@ const UserPage = ({ refreshToken, onLogout }) => {
                                 )}
                             </> : ''}
 
-                            <label > Showing Results {LastRowID ? LastRowID : "50"}</label>
+                            <label > Showing Results {dataNumber && dataNumber}</label>
 
                         </div>
                     </div>
@@ -397,9 +415,8 @@ const UserPage = ({ refreshToken, onLogout }) => {
                                     <th>Mobile No</th>
                                     <th>Email ID</th>
                                     <th>City</th>
+                                    <th>State</th>
                                     <th>Pincode</th>
-                                    <th>Order Item</th>
-                                    <th>Order Restaurant</th>
                                     <th>Date of Birth</th>
                                 </tr>
                             </thead>
@@ -412,10 +429,9 @@ const UserPage = ({ refreshToken, onLogout }) => {
                                         <td>{editingRowId === row.row_id ? <input type="text" value={editedData.mobile_no || ''} onChange={(e) => setEditedData({ ...editedData, mobile_no: e.target.value })} /> : row.mobile_no}</td>
                                         <td>{editingRowId === row.row_id ? <input type="text" value={editedData.email_id || ''} onChange={(e) => setEditedData({ ...editedData, email_id: e.target.value })} /> : row.email_id}</td>
                                         <td>{editingRowId === row.row_id ? <input type="text" value={editedData.city || ''} onChange={(e) => setEditedData({ ...editedData, city: e.target.value })} /> : row.city}</td>
+                                        <td>{editingRowId === row.row_id ? <input type="text" value={editedData.state || ''} onChange={(e) => setEditedData({ ...editedData, state: e.target.value })} /> : row.state}</td>
                                         <td>{editingRowId === row.row_id ? <input type="text" value={editedData.pincode || ''} onChange={(e) => setEditedData({ ...editedData, pincode: e.target.value })} /> : row.pincode}</td>
-                                        <td>{editingRowId === row.row_id ? <input type="text" value={editedData.order_item || ''} onChange={(e) => setEditedData({ ...editedData, order_item: e.target.value })} /> : row.order_item}</td>
-                                        <td>{editingRowId === row.row_id ? <input type="text" value={editedData.order_restaurant || ''} onChange={(e) => setEditedData({ ...editedData, order_restaurant: e.target.value })} /> : row.order_restaurant}</td>
-                                        <td>{editingRowId === row.row_id ? <input type="text" value={editedData.date_of_birth || ''} onChange={(e) => setEditedData({ ...editedData, date_of_birth: e.target.value })} /> : row.date_of_birth}</td>
+                                        <td>{editingRowId === row.row_id ? <input type="text" placeholder='YYY/MM/DD' value={editedData.date_of_birth && editedData.date_of_birth.split('-').join('/') || ''} onChange={(e) => setEditedData({ ...editedData, date_of_birth: e.target.value })} /> : row.date_of_birth && row.date_of_birth.split('-').join('/')}</td>
                                         {loggedData && loggedData.role === 'admin' ? <td>
                                             {editingRowId === row.row_id ? (
                                                 <>

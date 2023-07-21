@@ -302,7 +302,11 @@ button {
 .userBottomsection {
     margin-top: 30px;
 }
-
+.advertiseLog{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .userBottomsection table {
     width: 100%;
     border-collapse: collapse;

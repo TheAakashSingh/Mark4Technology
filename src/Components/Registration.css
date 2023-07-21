@@ -133,7 +133,17 @@
     grid-template-columns: auto auto;
     gap: 15px;
 }
-
+.R_midSection>.registrationForms>form>.genderGroupBox {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 15px;
+}
+.R_midSection>.registrationForms>form>.genderGroupBox>label>select {
+   width: 100%;
+}
+.text-danger{
+    color:red;
+}
 .R_midSection>.registrationForms>form>.dob_Mobile {
     display: grid;
     grid-template-columns: auto auto;

@@ -9,6 +9,7 @@ import './AdminPage.css';
 const AdminPage = ({ refreshToken, onLogout }) => {
   const [loggedData, setLoggedData] = useState(null);
   const [adminData, setAdminData] = useState(null);
+  const [searchValue, setSearchValue] = useState('');
   const [click, setClick] = useState(false);
   const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken') || '');
   const [role, setRole] = useState('');
@@ -86,77 +87,89 @@ const AdminPage = ({ refreshToken, onLogout }) => {
     navigate(`/userPage?accessToken=${accessToken}`);
   };
 
-    return (
-        <div className="AdminPage">
-            <div className="adminLeftSide">
-                <div className="R_leftSection">
-                    <div className={`regLoginLeft ${click ? 'regLeftBlock' : ''}`}>
-                        <img id="close" onClick={closeLeftSide} src={close} alt="" />
-                        <img src={logo} alt="" className="logo" />
-                    </div>
+  return (
+    <div className="AdminPage">
+      <div className="adminLeftSide">
+        <div className="R_leftSection">
+          <div className={`regLoginLeft ${click ? 'regLeftBlock' : ''}`}>
+            <img id="close" onClick={closeLeftSide} src={close} alt="" />
+            <img src={logo} alt="" className="logo" />
+          </div>
+        </div>
+        <div className="adminMidSection">
+          <div className="adminTopsection">
+            <div className="adminTopsection_a">
+              <div className="admin_Profile_Name">
+                <img src={picMenu} alt="" srcSet="" />
+                <div className="profName">
+                  <span id="fname">{loggedData && loggedData.first_name + " " + loggedData.last_name}</span>
+                  <span id="lname">{loggedData && loggedData.role}</span>
                 </div>
-                <div className="adminMidSection">
-                    <div className="adminTopsection">
-                        <div className="adminTopsection_a">
-                            <div className="admin_Profile_Name">
-                                <img src={picMenu} alt="" srcSet="" />
-                                <div className="profName">
-                                    <span id="fname">{loggedData && loggedData.first_name + " " + loggedData.last_name}</span>
-                                    <span id="lname">{loggedData && loggedData.role}</span>
-                                </div>
-                            </div>
-                            <div className="allLinks">
-                                <ul>
-                                    {loggedData && loggedData.role === 'admin' ? <li> <Link to="/manage-user">Manage User</Link> </li> : ''}
-                                    {loggedData && loggedData.role === 'admin' ? <li onClick={handleTablePageClick}>Filter Data</li> : ''}
-                                    <li>Log</li>
-                                    <button onClick={handleLogout}>Logout</button>
-                                </ul>
-                            </div>
-                        </div>
-
-
-                        <form method="GET" onSubmit={searchEachLogs}>
-                            <div className="adminTopsection_c">
-                                {loggedData && loggedData.role === 'admin' ? <div className="adminTopsection_d">
-                                    <button type='submit' >Submit</button>
-                                </div> : ''}
-
-                                {loggedData && loggedData.role === 'admin' ? <input type="search" name="searchUser"  id="srchUser" placeholder='Search Empoyee ID' /> : ''}
-                            </div>
-                        </form>
-
-
-                        <div className="adminTopsection_f">
-                            <span>Logs</span>
-                        </div>
-                    </div>
-                    <div className="adminBottomSection">
-                        {adminData && adminData.data && Object.keys(adminData.data).map((adminKey) => (
-                            <div className="adminBox" key={adminKey}>
-                                <span className="admindate">{adminKey}</span>
-                                {adminData.data[adminKey].map((item) => (
-                                    <div key={item.time}>
-                                        <div className="line"></div>
-                                        <div className="dataOfAdmin">
-                                            <div className="detailsLogin">
-                                                <p>Time: {item.time}</p>
-                                                <p>Status: {item.Status}</p>
-                                            </div>
-                                            <p>Activity: {item.Activity}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        ))}
-
-                    </div>
-
-                </div>
+              </div>
+              <div className="allLinks">
+                <ul>
+                  {loggedData && loggedData.role === 'admin' ? <li> <Link to="/manage-user">Manage User</Link> </li> : ''}
+                  {loggedData && loggedData.role === 'admin' ? <li onClick={handleTablePageClick}>Filter Data</li> : ''}
+                  {loggedData && loggedData.role === 'moderator' ? <li onClick={handleTablePageClick}>Filter Data</li> : ''}
+                  <li>Log</li>
+                  <button onClick={handleLogout}>Logout</button>
+                </ul>
+              </div>
             </div>
 
+
+            <form method="GET" onSubmit={searchEachLogs}>
+              <div className="adminTopsection_c">
+                {loggedData && loggedData.role === 'admin' ? <div className="adminTopsection_d">
+                  <button type='submit' >Submit</button>
+                </div> : ''}
+
+                <input
+                  type="search"
+                  name="srch"
+                  id="srch"
+                  placeholder="Search Employee..."
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                />
+              </div>
+            </form>
+
+
+            <div className="adminTopsection_f">
+              <span>Logs</span>
+            </div>
+          </div>
+          <div className="adminBottomSection">
+            {adminData &&
+              adminData.data &&
+              Object.keys(adminData.data)
+                .filter((adminKey) => adminKey.includes(searchValue.toLowerCase()))
+                .map((adminKey) => (
+                  <div className="adminBox" key={adminKey}>
+                    <span className="admindate">{adminKey}</span>
+                    {adminData.data[adminKey].map((item) => (
+                      <div key={item.time}>
+                        <div className="line"></div>
+                        <div className="dataOfAdmin">
+                          <div className="detailsLogin">
+                            <p>Time: {item.time}</p>
+                            <p>Status: {item.Status}</p>
+                          </div>
+                          <p>Activity: {item.Activity}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+
+          </div>
+
         </div>
-    );
+      </div>
+
+    </div>
+  );
 };
 
 export default AdminPage;

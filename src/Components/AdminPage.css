@@ -9,6 +9,12 @@
 
 }
 
+.admindate {
+    font-size: 18px;
+    font-weight: 500;
+    font-family: 'Roboto';
+}
+
 .adminLeftSide>.R_leftSection>.regLoginLeft>.adminbtns {
     display: flex;
     align-items: center;
@@ -33,7 +39,7 @@
     border-radius: 8px;
 }
 
-.adminTopsection_a>.allLinks>ul>button{
+.adminTopsection_a>.allLinks>ul>button {
     width: 125px;
     height: 38px;
     font-family: 'Roboto';
@@ -41,7 +47,7 @@
     font-weight: 700;
     font-size: 15px;
     line-height: 18px;
-    border: 2px solid #D3616B ;
+    border: 2px solid #D3616B;
     filter: drop-shadow(0px 2px 4px rgba(155, 69, 77, 0.76));
     border-radius: 8px;
     color: #D3616B;
@@ -300,6 +306,7 @@
 
 
 }
+
 .adminBottomSection>.adminBox>div {
     display: flex;
     gap: 17px;

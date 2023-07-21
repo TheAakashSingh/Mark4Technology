@@ -7,10 +7,10 @@
 
 .groupsAddBox {
     display: flex;
-    /* position: fixed; */
+    position: fixed;
     z-index: 1;
-    top: 10rem;
-    left: 52%;
+    top: 11rem;
+    right: 0;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -18,14 +18,15 @@
     padding: 20px 20px;
     border-radius: 12px;
     background-color: rgb(244 216 218);
-  
+
 }
-.M2-buttom{
+
+.M2-buttom {
     display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    justify-content: space-evenly;
+    align-items: flex-start;
+    gap: 34px;
 }
+
 .groupsAddBox input {
     padding: 10px;
     margin-bottom: 10px;
@@ -33,10 +34,12 @@
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
 .M2-buttom table {
     width: 51% !important;
-   
+
 }
+
 .groupsAddBox button {
     padding: 10px 20px;
     background-color: #d3616b;
@@ -49,4 +52,48 @@
 .groupsAddBox button:hover {
     background-color: #ea7b84;
     transition: all 200ms;
+}
+
+.editBox {
+    display: flex;
+    /* position: fixed; */
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 35px;
+    padding: 20px 20px;
+    border-radius: 12px;
+    background-color: rgb(244 216 218);
+}
+
+.editBox>label {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 130%;
+    color: #000000;
+}
+
+.editBox>input {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.editBox>.editSaveButton>button {
+    padding: 10px 20px;
+    background-color: #d3616b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.editSaveButton {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
 }

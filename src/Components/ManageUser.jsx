@@ -11,7 +11,9 @@ const ManageUser = ({ refreshToken, onLogout }) => {
     const [loggedData, setloggedData] = useState('')
     const [editingRowId, setEditingRowId] = useState(null);
     const [editedData, setEditedData] = useState({});
+    const [searchValue, setSearchValue] = useState('');
     const [tableData, settableData] = useState([])
+    const [deleteErr, setdeleteErr] = useState('')
 
     const [existGroups, setexistGroups] = useState([])
     const [accessToken, setAccessToken] = useState(localStorage.getItem('accessToken') || '');
@@ -105,7 +107,7 @@ const ManageUser = ({ refreshToken, onLogout }) => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${accessToken}`,
                 },
-                body: JSON.stringify( editedData
+                body: JSON.stringify(editedData
                     // "uu_id": editedData.uu_id,
                     // "email": editedData.email,
                     // "first_name": editedData.first_name,
@@ -190,11 +192,13 @@ const ManageUser = ({ refreshToken, onLogout }) => {
                 const updatedData = tableData.filter((row) => row.uu_id !== user_uuid);
                 settableData(updatedData);
                 console.log('User deleted successfully');
+                setdeleteErr('User deleted successfully');
             } else {
-                console.error('Error deleting user:', response.statusText);
+                setdeleteErr('Error deleting user:', response.statusText);
             }
         } catch (error) {
-            console.error('Error deleting user:', error);
+            setdeleteErr('Error deleting user:', error);
+
         }
     };
     const handleGetGroups = async (e) => {
@@ -256,7 +260,15 @@ const ManageUser = ({ refreshToken, onLogout }) => {
                     <div className="heads_R">
                         <h3>Manage User</h3>
                         <div className="searchManage">
-                            <input type="search" name="srch" id="srch" placeholder='Search User...' />
+                            <input
+                                type="search"
+                                name="srch"
+                                id="srch"
+                                placeholder="Search User..."
+                                value={searchValue}
+                                onChange={(e) => setSearchValue(e.target.value)}
+                            />
+
                             <button type="submit">Search</button>
                         </div>
                     </div>
@@ -273,44 +285,53 @@ const ManageUser = ({ refreshToken, onLogout }) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {tableData && tableData.map((row) => (
-                                    <tr key={row.uu_id}>
-                                        <td>{editingRowId === row.uu_id ? <input type="text" value={editedData.first_name || ''} onChange={(e) => setEditedData({ ...editedData, first_name: e.target.value })} /> : row.first_name}</td>
-                                        <td>{editingRowId === row.uu_id ? <input type="text" value={editedData.last_name || ''} onChange={(e) => setEditedData({ ...editedData, last_name: e.target.value })} /> : row.last_name}</td>
-                                        <td>{editingRowId === row.uu_id ? <input type="text" value={editedData.employee_id || ''} onChange={(e) => setEditedData({ ...editedData, employee_id: e.target.value })} /> : row.employee_id}</td>
-                                        <td>{editingRowId === row.uu_id ? <input type="text" value={editedData.role || ''} onChange={(e) => setEditedData({ ...editedData, role: e.target.value })} /> : row.role}</td>
+                                {tableData &&
+                                    tableData
+                                        .filter((row) => {
+                                            const fullName = `${row.first_name} ${row.last_name} ${row.employee_id} ${row.role}${row.groups} ${row.email} `.toLowerCase();
+                                            return fullName.includes(searchValue.toLowerCase());
+                                        }).map((row) => (
+                                            <tr key={row.uu_id}>
+                                                <td>{editingRowId === row.uu_id ? <input type="text" value={editedData.first_name || ''} onChange={(e) => setEditedData({ ...editedData, first_name: e.target.value })} /> : row.first_name}</td>
+                                                <td>{editingRowId === row.uu_id ? <input type="text" value={editedData.last_name || ''} onChange={(e) => setEditedData({ ...editedData, last_name: e.target.value })} /> : row.last_name}</td>
+                                                <td>{editingRowId === row.uu_id ? <input type="text" value={editedData.employee_id || ''} onChange={(e) => setEditedData({ ...editedData, employee_id: e.target.value })} /> : row.employee_id}</td>
+                                                <td>{editingRowId === row.uu_id ? <input type="text" value={editedData.role || ''} onChange={(e) => setEditedData({ ...editedData, role: e.target.value })} /> : row.role}</td>
 
-                                        <td> {editingRowId === row.uu_id ? <select className='manageUserSelectClass' name="" id="" value={editedData.groups || ''} onChange={(e) => setEditedData({ ...editedData, groups: [...editedData.groups, e.target.value] })}>
-                                            <option value="">Select groups</option>
-                                            {existGroups && existGroups.data.map((key) => (
-                                                <option key={key.name} value={key.name}>{key.name}</option>
-                                            ))}
-                                        </select>
+                                                <td> {editingRowId === row.uu_id ? <select className='manageUserSelectClass' name="" id="" value={editedData.groups || ''} onChange={(e) => setEditedData({ ...editedData, groups: [...editedData.groups, e.target.value] })}>
+                                                    <option value="">Select groups</option>
+                                                    {existGroups && existGroups.data.map((key) => (
+                                                        <option key={key.name} value={key.name}>{key.name}</option>
+                                                    ))}
+                                                </select>
+                                                    // key.created_by === row.uu_id ? key.created_by : 'dsd'
+                                                    : existGroups && existGroups.data && existGroups.data.map((key) => (
+                                                        <>{key.created_by === row.employee_id ? key.name + ',' : ''}</>
+                                                    ))}</td>
 
-                                            : row.groups}</td>
-
-                                        <td>{editingRowId === row.uu_id ? <input type="text" value={editedData.email || ''} onChange={(e) => setEditedData({ ...editedData, email: e.target.value })} /> : row.email}</td>
-                                        <td>
-                                            <button onClick={() => handleDelete(row.uu_id)}>Delete</button>
+                                                <td>{editingRowId === row.uu_id ? <input type="text" value={editedData.email || ''} onChange={(e) => setEditedData({ ...editedData, email: e.target.value })} /> : row.email}</td>
+                                                <td>
+                                                    <button onClick={() => handleDelete(row.uu_id)}>Delete</button>
 
 
-                                        </td>
 
-                                        {loggedData && loggedData.role === 'admin' ? <td>
-                                            {editingRowId === row.uu_id ? (
-                                                <>
-                                                    <button onClick={handleSaveClick}>Save</button>
-                                                    <button onClick={handleCancelClick}>Cancel</button>
-                                                </>
-                                            ) : (
-                                                <button onClick={() => handleEditClick(row.uu_id)}>Edit</button>
-                                            )}
-                                        </td> : ''}
-                                    </tr>
+                                                </td>
 
-                                ))}
+                                                {loggedData && loggedData.role === 'admin' ? <td>
+                                                    {editingRowId === row.uu_id ? (
+                                                        <>
+                                                            <button onClick={handleSaveClick}>Save</button>
+                                                            <button onClick={handleCancelClick}>Cancel</button>
+                                                        </>
+                                                    ) : (
+                                                        <button onClick={() => handleEditClick(row.uu_id)}>Edit</button>
+                                                    )}
+                                                </td> : ''}
+                                            </tr>
+
+                                        ))}
                             </tbody>
                         </table>
+
                         {/* <div id="pagination">
 
                             <button onClick={handlePageChange} >Next</button>
